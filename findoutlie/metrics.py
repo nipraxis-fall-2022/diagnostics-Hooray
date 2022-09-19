@@ -1,8 +1,7 @@
 """ Scan outlier metrics
 """
 
-# Any imports you need
-# +++your code here+++
+import numpy as np
 
 
 def dvars(img):
@@ -26,7 +25,8 @@ def dvars(img):
     # In [3]: np.mean(arr, axis=1)
     # Out[2]: array([3., 6.])
     #
-    # You may be be able to solve this in four lines, without a loop.
-    # But solve it any way you can.
-    # This is a placeholder, replace it to write your solution.
-    raise NotImplementedError('Code up this function')
+    data = img.get_fdata()
+    vol_diff = np.diff(data, axis=3) # [x,y,z,t-1]
+    dvar_val = np.sqrt(np.mean(vol_diff ** 2, axis=(0,1,2)))
+
+    return dvar_val

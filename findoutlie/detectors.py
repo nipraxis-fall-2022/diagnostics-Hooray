@@ -11,7 +11,7 @@ requirements are met and raise an error otherwise.
 """
 
 # Any imports you need
-# +++your code here+++
+import numpy as np
 
 
 def iqr_detector(measures, iqr_proportion=1.5):
@@ -45,9 +45,9 @@ def iqr_detector(measures, iqr_proportion=1.5):
         A boolean vector of same length as `measures`, where True means the
         corresponding value in `measures` is an outlier.
     """
-    # Any imports you need
-    # Hints:
-    # * investigate np.percentile
-    # * You'll likely need np.logical_or
-    # https://textbook.nipraxis.org/numpy_logical.html
-    # +++your code here+++
+    Q1, Q3 = np.percentile(measures, [25, 75])
+    IQR = Q3 - Q1
+    lower_lim = Q1 - IQR * iqr_proportion
+    upper_lim = Q3 + IQR * iqr_proportion
+    is_outlier = np.logical_or(measures<lower_lim, measures>upper_lim)
+    return is_outlier
